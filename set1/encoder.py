@@ -1,5 +1,6 @@
 import sys
 import os
+import io
 
 def init():
 	table = {}
@@ -9,10 +10,12 @@ def init():
 	return table
 
 def encode(hs, table):
+	# walk string in 6 bit chunks, converting each one to the b64 equivalent symbol
 	pass
 
 def main(args, table):
-	for line in sys.stdin:
+	stream = sys.stdin
+	for line in stream:
 		b64 = encode(line, table)
 		print b64
 
