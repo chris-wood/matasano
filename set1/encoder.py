@@ -21,23 +21,23 @@ def encode(hs, table):
         # 01100001 01100010 01100011
         # 011000 010110 001001 100011
 
-        word1 = (triple[0] >> 2) & 63
-        word2 = ((triple[0] & 3) << 4) | ((triple[1] >> 4) & 31)
-        word3 = ((triple[1] & 31) << 2) | ((triple[2] >> 6) & 3)
-        word4 = triple[2] & 63
+        word1 = (triple[0] >> 2) & 0x3F
+        word2 = ((triple[0] & 0x3) << 4) | ((triple[1] >> 4) & 0xF)
+        word3 = ((triple[1] & 0xF) << 2) | ((triple[2] >> 6) & 0x3)
+        word4 = triple[2] & 0x3F
 
         print triple, word1, word2, word3, word4
 
         b64val += table[word1] + table[word2] + table[word3] + table[word4]
 
     if (len(hs) % 3 == 1):
-        word1 = (hs[-1] >> 2) & 63
-        word2 = hs[-1] & 3
+        word1 = (hs[-1] >> 2) & 0x3F
+        word2 = hs[-1] & 0x3
         b64val += table[word1] + table[word2]
     elif (len(hs) % 3 == 2):
-        word1 = (hs[-2] >> 2) & 63
-        word2 = ((hs[-2] & 3) << 4) | ((hs[-1] >> 4) & 31)
-        word3 = (hs[-1] & 31) << 2
+        word1 = (hs[-2] >> 2) & 0x3F
+        word2 = ((hs[-2] & 0x3) << 4) | ((hs[-1] >> 4) & 0xF)
+        word3 = (hs[-1] & 0xF) << 2
         b64val += table[word1] + table[word2] + table[word3]
     else:
         pass # evenly divisible by 3
