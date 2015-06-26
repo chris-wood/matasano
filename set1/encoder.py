@@ -26,8 +26,6 @@ def encode(hs, table):
         word3 = ((triple[1] & 0xF) << 2) | ((triple[2] >> 6) & 0x3)
         word4 = triple[2] & 0x3F
 
-        print triple, word1, word2, word3, word4
-
         b64val += table[word1] + table[word2] + table[word3] + table[word4]
 
     if (len(hs) % 3 == 1):
