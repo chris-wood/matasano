@@ -4,19 +4,20 @@ import io
 import math
 
 def init():
-	table = {}
-	tableString = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
-	for i,v in enumerate(tableString):
-		table[i] = v
-	return table
+    table = {}
+    tableString = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+    for i,v in enumerate(tableString):
+        table[i] = v
+    return table
 
 def encode(hs, table):
-	# walk string in 6 bit chunks, converting each one to the b64 equivalent symbol
+    # walk string in 6 bit chunks, converting each one to the b64 equivalent symbol
     limit = int(math.floor(len(hs) / 3))
     b64val = ""
+    hs = map(lambda n : ord(n), hs)
     for i in range(limit):
-        triple = map(lambda n : ord(n), hs[i * 3:(i * 3) + 3])
-        
+        triple = hs[i * 3:(i * 3) + 3]
+
         # abc
         # 01100001 01100010 01100011
         # 011000 010110 001001 100011
@@ -40,14 +41,15 @@ def encode(hs, table):
     else:
         pass # evenly divisible by 3
 
-	return b64val
+    return b64val
 
 def main(args, table):
-	stream = sys.stdin
-	for line in stream:
-		b64 = encode(line.strip(), table)
-		print b64
+    stream = sys.stdin
+    for line in stream:
+        line = line.strip().decode("hex") # decodes to a string
+        b64 = encode(line, table)
+        print b64
 
 if __name__ == "__main__":
-	base64table = init()
-	main(sys.argv[1:], base64table)
+    base64table = init()
+    main(sys.argv[1:], base64table)
