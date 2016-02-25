@@ -33,8 +33,8 @@ def compute_frequency(string):
     frequency = {k: (float(counts[k]) / len(string)) * 100.0 for k in counts.keys()}
     return frequency
 
-def main(args):
-    ciphertext = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736".decode("hex")
+def crack(string):
+    ciphertext = string.decode("hex")
     length = len(ciphertext)
     stats = {}
     
@@ -58,6 +58,10 @@ def main(args):
 
     print "\n\n"
     print "Most probable decoding: %s -> %s" % (stats[min_index][0], stats[min_index][1])
+
+def main(args):
+    ciphertext = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"
+    crack(ciphertext)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
