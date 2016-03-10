@@ -21,6 +21,7 @@ def hamming_distance(x, y):
     diff = xor(x, y)
     return reduce(lambda acc, b : acc + support(b), diff, 0)
 
+# sanity check
 print hamming_distance("this is a test", "wokka wokka!!!")
 
 with open(sys.argv[1], 'r') as fh:
